@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Aeromodelling Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- New Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- NEW STYLE GUIDE REFACTOR --- */
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --bg-footer: #0F0F0F;
+            --text-primary: #E5E5E5;
+            --text-secondary: #9CA3AF;
+            --accent: #F97316;
+            --accent-hover: #EA580C;
+            --link: #60A5FA;
+            --border: #2D2D2D;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding-top: 64px; /* Space for fixed header */
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        p, li, span, a, button {
+            font-family: 'Inter', sans-serif;
+        }
+        
+          /* --- Header Styles --- */
+#main-header {
+    position: fixed;
+    top: 0; left: 0; right: 0; z-index: 100;
+    background-color: var(--bg-secondary); 
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s ease;
+}
+#main-header.scrolled {
+    background-color: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+/* --- UPDATED HEADER ANIMATIONS --- */
+@keyframes flow-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.logo-container {
+    transition: transform 0.3s ease;
+}
+.logo-container:hover {
+    transform: scale(1.05);
+}
+.animated-logo-text {
+    background: linear-gradient(90deg, var(--accent), var(--text-primary), var(--accent));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: flow-gradient 5s ease-in-out infinite;
+}
+.animated-logo-text .club-name-span {
+    -webkit-text-fill-color: var(--text-primary); /* Keep sub-text normal */
+}
+
+.nav-link {
+    position: relative;
+    padding: 8px 4px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+.nav-link.active { color: var(--accent); }
+.nav-link:hover { color: var(--accent); }
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: width 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+    height: 2px;
+    border-radius: 0;
+    opacity: 1;
+}
+/* --- END OF HEADER ANIMATIONS --- */
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        /* Page Content & Headings */
+        .page-title {
+            color: var(--text-primary);
+            border-color: var(--accent);
+        }
+        .page-subtitle {
+            color: var(--text-secondary);
+        }
+        .section-title {
+            color: var(--text-primary);
+        }
+        .year-title {
+            color: var(--accent);
+            border-color: var(--border);
+        }
+
+        /* Member Card Styling */
+        .member-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            object-position: top;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); 
+            border-radius: 0.5rem 0.5rem 0 0;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .member-wrapper {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative; 
+            z-index: 5;
+        }
+        .member-wrapper:hover {
+            transform: translateY(-10px); /* Hover lift effect */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        .member-wrapper.head-card {
+            border: 2px solid var(--accent);
+        }
+        .member-name {
+            color: var(--text-primary);
+        }
+        .member-role {
+            color: var(--accent);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+        .icon-link {
+            color: var(--text-secondary);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        .icon-link:hover {
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        /* Background Plexus Animation */
+        .plexus-background {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: 1;
+            background-color: transparent;
+            overflow: hidden;
+            pointer-events: none;
+            filter: blur(0.5px); 
+        }
+        .plexus-background::before,
+        .plexus-background::after {
+            content: '';
+            position: absolute;
+            width: 80vh; height: 80vh;
+            border-radius: 50%;
+            /* --accent: rgb(249, 115, 22) */
+            background: rgba(249, 115, 22, 0.1); 
+            box-shadow: 0 0 200px 70px rgba(249, 115, 22, 0.2);
+            animation: plexus-drift 60s linear infinite;
+        }
+        .plexus-background::before {
+            top: -20vh; left: -20vw;
+            animation-delay: 0s;
+        }
+        .plexus-background::after {
+            bottom: -30vh; right: -30vw;
+            animation-delay: -30s;
+            background: rgba(96, 165, 250, 0.1); /* --link color */
+            box-shadow: 0 0 150px 60px rgba(96, 165, 250, 0.15);
+            transform: scale(0.8);
+        }
+        @keyframes plexus-drift {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.9; }
+            25% { transform: translate(15vw, 15vh) rotate(90deg); opacity: 0.7; }
+            50% { transform: translate(-10vw, -20vh) rotate(180deg); opacity: 1.0; }
+            75% { transform: translate(-5vw, 5vh) rotate(270deg); opacity: 0.8; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.9; }
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background-color: var(--bg-footer);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .footer-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-link {
+            color: var(--link);
+            transition: color 0.3s ease;
+        }
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        .social-icon {
+            color: var(--text-secondary);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="plexus-background"></div>
+
+<header id="main-header">
+    <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20"> <!-- Increased height from h-16 -->
+            <div class="flex-shrink-0">
+                <a href="index.html" class="logo-container flex items-center text-2xl font-black">
+                    <!-- Increased logo size and margin -->
+                    <img src="gallery/logo.png" alt="Club Logo" class="h-14 mr-4 rounded-full"> 
+                    <span class="animated-logo-text">Aeromodelling <span class="club-name-span font-light">Club</span></span>
+                </a>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="index.html" class="nav-link px-3 text-sm font-medium">Home</a>
+                    <a href="competition.html" class="nav-link px-3 text-sm font-medium">Competition</a>
+                    <a href="projects.html" class="nav-link px-3 text-sm font-medium">Projects</a>
+                    <a href="team.html" class="nav-link active px-3 text-sm font-medium">Our Team</a>
+                    <a href="alumni.html" class="nav-link px-3 text-sm font-medium">Our Alumni</a>
+                    <a href="about.html" class="nav-link px-3 text-sm font-medium">About Us</a>
+                    <a href="reach.html" class="nav-link px-3 text-sm font-medium">Reach Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <h1 class="page-title text-5xl font-extrabold mb-12 border-b-4 pb-2">Meet the Crew</h1>
+        <p class="page-subtitle text-xl mb-12">
+            Our multidisciplinary team drives innovation across engineering, design, and management.
+        </p>
+
+        <!-- SECTION: CLUB HEAD -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8">HEAD</h2>
+            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="member-wrapper head-card rounded-xl overflow-hidden shadow-xl col-span-1 lg:col-start-2">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/aman.png" onerror="this.src='https://placehold.co/600x400/1E1E1E/F97316?text=HEAD'" alt="Club Head">
+                    </a>
+                    <div class="p-6 text-center">
+                        <h3 class="member-name text-2xl font-bold">Aman Kumar Singh</h3>
+                        <p class="member-role text-sm uppercase font-semibold mt-1 mb-3">Final Year</p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="https://www.linkedin.com/in/aman-kumar-singh-821b13258?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-xl"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/amann_vishen?igsh=NnZwNXU3bnY5Y3Zh" target="_blank" class="icon-link text-xl"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:2022051115@mmmut.ac.in" target="_blank" class="icon-link text-xl"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: DESIGN & ANALYSIS -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8">DESIGN AND ANALYSIS</h2>
+            <div class="space-y-8">
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Final Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="https://sites.google.com/view/abhishekportfolio-com/home" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/abhishek.png" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=D+F1'" alt="Design Team Member 1">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Abhishek Tiwari(Captain) Chakrapani</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Lead Design Specialist</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/abhishek-tiwari-89911727a/" target="blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/chakrpani_108/" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:abhishekdeoria2002@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Third Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/ravishant.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=D+T1'" alt="Design Team Member 2">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Ravishant Singh</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Aerodynamics Analyst</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/ravishant-singh-043333296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/ravishantsingh07?igsh=MW0xeGNnbHhwZ3piYQ==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:ravishantkumar1212@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/ritika.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=D+T2'" alt="Design Team Member 3">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Ritika Singh</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Structural Engineer</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/ritika-singh-78b904306?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/amrita.7287?igsh=YWxoaG9vZXg1cDYz" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:ritikasingh29868@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SECTION: ELECTRONICS --- -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8">ELECTRONICS</h2>
+            <div class="space-y-8">
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Third Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <!-- Member 1 -->
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="https://aditya-narain-portfolio.vercel.app/" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/narayan.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=E+T1'" alt="Electronics Team Member 1">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Aditya Narain Tiwari</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Avionics Lead</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFqWn0gz2akrgAAAZm-7o3obD1YojDAH3Ot3TNlJwd9HG5EsN-2SadogUxrUlxMT-4Ew11p6_K-OArRLzsWamrS-Rc4teXxCfixy2FEpvdxL4eSpU1wzbW1DUfZsma202mjK-U=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Faditya" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:narayanadigkp23@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/swadesh.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=E+T2'" alt="Electronics Team Member 2">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Swadesh Saxena</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Telemetry Systems</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/swadesh14?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:swadeshsaxena19@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/akhilesh.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=E+T3'" alt="Electronics Team Member 3">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Akhilesh Yadav</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Power Systems Engineer</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="www.linkedin.com/in/ akhilesh-yadav-25534431a" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:akhi2492005@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/shubham.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=E+T4'" alt="Electronics Team Member 4">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Shubhan Yadav</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Radio Control Expert</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/shubham7546" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/shubham___0335?igsh=cWh6dHl4OTdxanY=" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:shubhammars111@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/rishi.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=E+T5'" alt="Electronics Team Member 5">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Rishi Chandra Rana</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Sensor Integration</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/rishi-chandra-rana-1a7697385?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/iconicrishirana?igsh=anRocGJjeGpwMG1h" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:onlyrishi666@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SECTION: AI/ML --- -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8">AI/ML</h2>
+            <div class="space-y-8">
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Final Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/ankit.png" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=AI+F1'" alt="AI/ML Team Member 1">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Ankit Shukla</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Computer Vision Lead</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="http://www.linkedin.com/in/shukla-ankit21" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/shuklaankit50/" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:shivamshukla19edu@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Third Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="https://aditya-narain-portfolio.vercel.app/" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/narayan.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=AI+T1'" alt="AI/ML Team Member 2">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Aditya Narain Tiwari</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">AI Navigation Specialist</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFqWn0gz2akrgAAAZm-7o3obD1YojDAH3Ot3TNlJwd9HG5EsN-2SadogUxrUlxMT-4Ew11p6_K-OArRLzsWamrS-Rc4teXxCfixy2FEpvdxL4eSpU1wzbW1DUfZsma202mjK-U=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Faditya" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:narayanadigkp23@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/prakhar.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=AI+T2'" alt="AI/ML Team Member 3">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Prakhar Dubey</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Data Analyst</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/prakhar-dubey-9324732b7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:prakhard81@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SECTION: WEB DESIGNING --- -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8">WEB DESIGNING</h2>
+            <div class="space-y-8">
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Third Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="https://aditya-narain-portfolio.vercel.app/" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/narayan.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=WEB+T1'" alt="Web Design Team Member 1">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Aditya Narain Tiwari</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Full Stack Developer</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFqWn0gz2akrgAAAZm-7o3obD1YojDAH3Ot3TNlJwd9HG5EsN-2SadogUxrUlxMT-4Ew11p6_K-OArRLzsWamrS-Rc4teXxCfixy2FEpvdxL4eSpU1wzbW1DUfZsma202mjK-U=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Faditya" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:narayanadigkp23@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/ravishant.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=WEB+T2'" alt="Web Design Team Member 2">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Ravishant Singh</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">UI/UX Specialist</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/ravishant-singh-043333296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/ravishantsingh07?igsh=MW0xeGNnbHhwZ3piYQ==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:ravishantkumar1212@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SECTION: SOCIAL MEDIA --- -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8">SOCIAL MEDIA MANAGER</h2>
+            <div class="space-y-8">
+                <div class="border-l-4 pl-4 border-border">
+                    <h3 class="year-title text-2xl font-semibold mb-4">Third Year</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/anurag.png" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=SM+T1'" alt="Social Media Team Member 1">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Anurag Gangwar</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Content and Outreach</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/anurag-gangwar-787418363?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/_anrggg1?igsh=a3BleXRocmI0bGZ4" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:patelanuraag143@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                            <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                                <img class="member-card-image" src="Photos/shubham.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=E+T4'" alt="Electronics Team Member 4">
+                            </a>
+                            <div class="p-4 text-center">
+                                <h4 class="member-name text-xl font-bold">Shubhan Yadav</h4>
+                                <p class="text-xs mt-1 mb-2 text-secondary">Photoshop Expert</p>
+                                <div class="flex justify-center space-x-3">
+                                    <a href="https://www.linkedin.com/in/shubham7546" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                                    <a href="https://www.instagram.com/shubham___0335?igsh=cWh6dHl4OTdxanY=" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                                    <a href="mailto:shubhammars111@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- SECTION: OUR FUTURE --- -->
+        <section class="mb-16">
+            <h2 class="section-title text-4xl font-bold mb-8 border-b-2 pb-2 border-border">
+                OUR FUTURE (Second Year)
+            </h2>
+            <p class="page-subtitle text-lg mb-8">
+                The foundation of our club: highly motivated and dedicated students who will lead our projects next year. 
+            </p>
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/ganesh.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+1'" alt="Second Year Member 1">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Ganesh K. Pathak</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ECE</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/ganesh-pathak-43065a286?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/ganesh__pandittt?igsh=ZmdkcWZmaDl2Mnp6" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:engineerganesh18@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/suryansh.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+2'" alt="Second Year Member 2">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Suryansh Pandey</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ME</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/suryansh-pandey-a531b2329?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/suryanshpandey.108?igsh=cG03YzRtMWEwenNw" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:suryanshpandeycmf@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/shreya.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+3'" alt="Second Year Member 3">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Shreya Mishra</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ECE</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/shreya-mishra-b43a97342" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/invites/contact/?igsh=rekvkmh76bdn&utm_content=umhjoge" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:mishra.shreya2112@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/ashish.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+4'" alt="Second Year Member 4">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Aashish Tiwari</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ME</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/aashish-tiwari-168487327?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/chulbul.pandit.7899?igsh=MXNkdGluN2twdm5qaA==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:at192890@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/aditi.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+5'" alt="Second Year Member 5">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Aditi Singh</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">BBA</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/aditi-singh-990973371?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/_aditiiiisinghh?igsh=NjgyeDNrZHBybWV4" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:ad6aditiwork@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/ashu.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+6'" alt="Second Year Member 6">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Ashutosh Pandey</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">EE</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/ashutosh-pandey-163578328?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/ashutoshh_87?igsh=cmQ1bWQ4cDloZGxr" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:ashutoshp0229@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/nikhil.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+7'" alt="Second Year Member 7">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Nikhil Kumar</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ECE(IoT)</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/nikhil-kumar-7358b2362?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/__nik._.01___?igsh=MXg0aHdrOWViNG1paQ==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:nkh.chilu@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/sagun.png" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+8'" alt="Second Year Member 8">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Shagun Pandey</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ME</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/shagun-pandey-564b55374" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/shagunpandey_025?igsh=MTIxN3phbmlndHBwYg==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:shagunpandey025@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/ayush.jpeg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+9'" alt="Second Year Member 9">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Ayush Ranjan</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ME</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/ayush-ranjan-249343369?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:ayushranjanp2100@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/sachin.JPG" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+10'" alt="Second Year Member 10">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Sachin Kumar</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ECE(IoT)</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/sachin-kumar-52b804330?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/itz_sachin049?utm_source=qr&igsh=MTNzNnJ6anB4c3pqYw==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:sachin00349Kumar@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/sanjana.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+11'" alt="Second Year Member 11">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Sanjana Ojha</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ME</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="www.linkedin.com/in/Sanjana Ojha" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/sanjana.144_?igsh=MTlhdG5yZ3RoZ2I3MQ==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:sanjanaojha2004@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/pragati.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+12'" alt="Second Year Member 12">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Pragati </h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ME</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/pragati-agrahari-aa276b335?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BatlFhmWuTPyWwiz3RNv9cw%3D%3D" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:pragatiagrahari43@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/aanya.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+13'" alt="Second Year Member 13">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Aanya Tripathi</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">EE</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="https://www.linkedin.com/in/aanya-tripathi-99605033b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:Taanya729@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="member-wrapper rounded-xl overflow-hidden shadow-xl">
+                    <a href="#" target="_blank" class="block w-full h-auto" title="View Portfolio">
+                        <img class="member-card-image" src="Photos/pranjal.jpg" onerror="this.src='https://placehold.co/600x400/1E1E1E/E5E5E5?text=S2+14'" alt="Second Year Member 14">
+                    </a>
+                    <div class="p-4 text-center">
+                        <h4 class="member-name text-xl font-bold">Pranjal Singh</h4>
+                        <p class="text-xs mt-1 mb-2 text-secondary">ECE</p>
+                        <div class="flex justify-center space-x-3 mt-3">
+                            <a href="#" target="_blank" class="icon-link text-lg"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://www.instagram.com/paralax2op?igsh=MXg3MmM1cXpmbDdscQ==" target="_blank" class="icon-link text-lg"><i class="fab fa-instagram"></i></a>
+                            <a href="mailto:cnpranjal12345@gmail.com" target="_blank" class="icon-link text-lg"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="site-footer pt-20 pb-8">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-10">
+                 <a href="index.html" class="inline-block mb-4">
+                    <img src="gallery/logo.png" alt="Club Logo" class="h-24 w-auto rounded-full mx-auto">
+                </a>
+                <h3 class="text-3xl font-black text-primary">Aeromodelling Club</h3>
+                <p class="text-md mt-2 uppercase tracking-widest text-secondary">Design. Build. Fly. Inspire.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="projects.html" class="footer-link">Projects</a></li>
+                        <li><a href="team.html" class="footer-link">Our Team</a></li>
+                        <li><a href="reach.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="mb-8 md:mb-0">
+                    <h3 class="footer-heading">Get In Touch</h3>
+                    <p>Madan Mohan Malaviya University of Technology (MMMUT), Gorakhpur, Uttar Pradesh, India – 273010</p>
+                     <a href="mailto:malaviyans.starfleet@gmail.com" class="footer-link inline-block mt-3">malaviyans.starfleet@gmail.com</a>
+                </div>
+                <div>
+                    <h3 class="footer-heading">Follow Us</h3>
+                    <div class="flex justify-center space-x-5 text-2xl">
+                        <a href="https://www.linkedin.com/company/malviyans-starfleet/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/malaviyans.starfleet?igsh=MXZremhobWpzZ3Y5" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-16 border-t border-border pt-8 text-center text-sm">
+            <p>&copy; 2025 Aeromodelling Club MMMUT. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

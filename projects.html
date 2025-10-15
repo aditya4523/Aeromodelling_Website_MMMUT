@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Aeromodelling Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- New Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- NEW STYLE GUIDE REFACTOR --- */
+        :root {
+            --bg-primary: #121212;
+            --bg-secondary: #1E1E1E;
+            --bg-footer: #0F0F0F;
+            --text-primary: #E5E5E5;
+            --text-secondary: #9CA3AF;
+            --accent: #F97316;
+            --accent-hover: #EA580C;
+            --link: #60A5FA;
+            --border: #2D2D2D;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+            padding-top: 64px; /* Space for fixed header */
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        p, li, span, a, button {
+            font-family: 'Inter', sans-serif;
+        }
+
+          /* --- Header Styles --- */
+#main-header {
+    position: fixed;
+    top: 0; left: 0; right: 0; z-index: 100;
+    background-color: var(--bg-secondary); 
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s ease;
+}
+#main-header.scrolled {
+    background-color: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+/* --- UPDATED HEADER ANIMATIONS --- */
+@keyframes flow-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.logo-container {
+    transition: transform 0.3s ease;
+}
+.logo-container:hover {
+    transform: scale(1.05);
+}
+.animated-logo-text {
+    background: linear-gradient(90deg, var(--accent), var(--text-primary), var(--accent));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: flow-gradient 5s ease-in-out infinite;
+}
+.animated-logo-text .club-name-span {
+    -webkit-text-fill-color: var(--text-primary); /* Keep sub-text normal */
+}
+
+.nav-link {
+    position: relative;
+    padding: 8px 4px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+.nav-link.active { color: var(--accent); }
+.nav-link:hover { color: var(--accent); }
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: width 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+    height: 2px;
+    border-radius: 0;
+    opacity: 1;
+}
+/* --- END OF HEADER ANIMATIONS --- */
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+
+        /* Background Image Container */
+        #background-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+        }
+        #background-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(18, 18, 18, 0.85); /* Dark overlay from primary bg */
+            z-index: 1; 
+        }
+        .bg-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: opacity 1s ease-in-out;
+            z-index: 0;
+        }
+
+        /* Page Content & Headings */
+        #page-content {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        #page-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .page-title {
+            color: var(--accent);
+        }
+        .page-subtitle {
+            color: var(--text-secondary);
+        }
+        
+        /* Project Card Styling */
+        .project-card {
+            background-color: transparent;
+            height: 300px;
+            perspective: 1000px;
+            cursor: pointer;
+            position: relative; 
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-10px); /* Hover lift effect */
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+        }
+        .project-card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border); 
+            background-color: var(--bg-secondary);
+        }
+        .card-front img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        .card-front .card-title {
+             font-family: 'Poppins', sans-serif;
+             font-weight: 600;
+        }
+        .card-back {
+            background: var(--bg-secondary);
+            transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 1.5rem;
+            text-align: left;
+        }
+        .card-back h4 {
+            color: var(--accent);
+            font-weight: 600;
+        }
+         .card-back ul {
+            color: var(--text-secondary);
+         }
+        .card-back .fa-rocket {
+             color: var(--accent);
+        }
+        
+        /* Year Filter Styling */
+        .year-filter-container {
+            position: sticky;
+            top: 64px; /* Height of the header */
+            background-color: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 50;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .filter-btn {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* Year Section Styling */
+        .year-section h2 {
+            border-color: var(--accent);
+        }
+        .year-section {
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            opacity: 1;
+            transform: scale(1);
+        }
+        .year-section.hidden-section {
+            opacity: 0;
+            transform: scale(0.95);
+            height: 0;
+            overflow: hidden;
+            margin: 0; padding: 0;
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background-color: var(--bg-footer);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .footer-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-link {
+            color: var(--link);
+            transition: color 0.3s ease;
+        }
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        .social-icon {
+            color: var(--text-secondary);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div id="background-container">
+        <div class="bg-image" id="bg-image-1"></div>
+        <div class="bg-image" id="bg-image-2"></div>
+    </div>
+
+<header id="main-header">
+    <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20"> <!-- Increased height from h-16 -->
+            <div class="flex-shrink-0">
+                <a href="index.html" class="logo-container flex items-center text-2xl font-black">
+                    <!-- Increased logo size and margin -->
+                    <img src="gallery/logo.png" alt="Club Logo" class="h-14 mr-4 rounded-full"> 
+                    <span class="animated-logo-text">Aeromodelling <span class="club-name-span font-light">Club</span></span>
+                </a>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="index.html" class="nav-link px-3 text-sm font-medium">Home</a>
+                    <a href="competition.html" class="nav-link px-3 text-sm font-medium">Competition</a>
+                    <a href="projects.html" class="nav-link active px-3 text-sm font-medium">Projects</a>
+                    <a href="team.html" class="nav-link px-3 text-sm font-medium">Our Team</a>
+                    <a href="alumni.html" class="nav-link px-3 text-sm font-medium">Our Alumni</a>
+                    <a href="about.html" class="nav-link px-3 text-sm font-medium">About Us</a>
+                    <a href="reach.html" class="nav-link px-3 text-sm font-medium">Reach Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <div id="page-content" class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h1 class="page-title text-5xl md:text-6xl font-extrabold">Our Projects</h1>
+            <p class="page-subtitle mt-4 text-xl max-w-3xl mx-auto">From concept to flight, a showcase of our engineering passion and innovation through the years.</p>
+        </div>
+
+        <!-- Year Filter -->
+        <div class="year-filter-container">
+            <div id="year-filter" class="flex justify-center space-x-4 md:space-x-8 text-lg">
+                <button class="filter-btn active" data-year="all">All</button>
+                <button class="filter-btn" data-year="2025">2025</button>
+                <button class="filter-btn" data-year="2024">2024</button>
+                <button class="filter-btn" data-year="2023">2023</button>
+                <button class="filter-btn" data-year="2022">2022</button>
+            </div>
+        </div>
+
+        <div id="projects-container">
+            <!-- Projects will be dynamically inserted here by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer class="site-footer pt-20 pb-8">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-10">
+                 <a href="index.html" class="inline-block mb-4">
+                    <img src="gallery/logo.png" alt="Club Logo" class="h-24 w-auto rounded-full mx-auto">
+                </a>
+                <h3 class="text-3xl font-black text-primary">Aeromodelling Club</h3>
+                <p class="text-md mt-2 uppercase tracking-widest text-secondary">Design. Build. Fly. Inspire.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="projects.html" class="footer-link">Projects</a></li>
+                        <li><a href="team.html" class="footer-link">Our Team</a></li>
+                        <li><a href="reach.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="mb-8 md:mb-0">
+                    <h3 class="footer-heading">Get In Touch</h3>
+                    <p>Madan Mohan Malaviya University of Technology (MMMUT), Gorakhpur, Uttar Pradesh, India – 273010</p>
+                     <a href="mailto:malaviyans.starfleet@gmail.com" class="footer-link inline-block mt-3">malaviyans.starfleet@gmail.com</a>
+                </div>
+                <div>
+                    <h3 class="footer-heading">Follow Us</h3>
+                    <div class="flex justify-center space-x-5 text-2xl">
+                        <a href="https://www.linkedin.com/company/malviyans-starfleet/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/malaviyans.starfleet?igsh=MXZremhobWpzZ3Y5" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-16 border-t border-border pt-8 text-center text-sm">
+            <p>&copy; 2025 Aeromodelling Club MMMUT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const PROJECTS_DATA = {
+            '2025': {
+                backgroundImage: 'gallery/bac.jpg',
+                items: [
+                    {
+                        name: 'Red-Dragonfly',
+                        image: 'gallery/dragonfly.jpg',
+                        specs: ['Type: Quadcopter', 'Camera: 4K Gimbal-stabilized', 'Range: 5 km', 'Flight Time: 25 minutes', 'Feature: AI Object Detection']
+                    },
+                    {
+                        name: 'Balsa Fixed-wing',
+                        image: 'gallery/balsa.jpg',
+                        specs: ['Wingspan: 1 meters', 'Propulsion: Single pusher propeller', 'Max Payload: 100 g', 'Endurance: 30 minutes', 'Feature: Aerial surveillance']
+                    }
+                ]
+            },
+            '2024': {
+                backgroundImage: 'gallery/bac5.jpg',
+                items: [
+                    {
+                        name: 'Puller Fixed-Wing',
+                        image: 'gallery/puller.jpg',
+                        specs: ['Wingspan: 1 meters', 'Propulsion: Single pusher propeller', 'Max Payload: 1 kg', 'Endurance: 15 minutes', 'Feature: Capable of carrying 1 kg of Payload']
+                    },
+                    {
+                        name: 'Pusher Fixed-Wing',
+                        image: 'gallery/push.jpg',
+                        specs: ['Wingspan: 1 meters', 'Propulsion: Single pusher propeller', 'Max Payload: 0.5 kg', 'Endurance: 25 minutes', 'Feature: Capable of carrying 500 g of Payload']
+                    }
+                ]
+            },
+            '2023': {
+                backgroundImage: 'gallery/bac2.jpg',
+                items: [
+                    {
+                        name: 'Bettle Bee',
+                        image: 'gallery/beetle.jpg',
+                        specs: ['Type: Quadcopter', 'Max Payload: 500 g', 'Flight Time: 20 minutes', 'Feature:Payload dropping at Disaster Prone area']
+                    },
+                ]
+            },
+            '2022': {
+                backgroundImage: 'gallery/bac4.jpg',
+                items: [
+                    {
+                        name: 'Bumble Bee',
+                        image: 'gallery/bumble.jpg',
+                        specs: ['Type: Quadcopter', 'Max Payload: 500 g', 'Flight Time: 20 minutes', 'Feature:AI based Object detection']
+                    }
+                ]
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectsContainer = document.getElementById('projects-container');
+            const filterContainer = document.getElementById('year-filter');
+            const bg1 = document.getElementById('bg-image-1');
+            const bg2 = document.getElementById('bg-image-2');
+            let activeBg = bg1;
+            let inactiveBg = bg2;
+            
+            // Set initial background
+            activeBg.style.backgroundImage = `url(${PROJECTS_DATA['2025'].backgroundImage})`;
+            activeBg.style.opacity = 1;
+            inactiveBg.style.opacity = 0;
+
+
+            // Intersection Observer to change background on scroll
+            const observerOptions = { root: null, threshold: 0.4, rootMargin: "-100px 0px -100px 0px" };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const year = entry.target.id.split('-')[1];
+                        const newImageUrl = PROJECTS_DATA[year].backgroundImage;
+
+                        const currentBgUrl = inactiveBg.style.backgroundImage || '';
+                        if (currentBgUrl.includes(newImageUrl)) {
+                           return;
+                        }
+                        
+                        inactiveBg.style.backgroundImage = `url(${newImageUrl})`;
+                        activeBg.style.opacity = 0;
+                        inactiveBg.style.opacity = 1;
+
+                        [activeBg, inactiveBg] = [inactiveBg, activeBg];
+                    }
+                });
+            }, observerOptions);
+
+            function renderProjects(data) {
+                projectsContainer.innerHTML = '';
+                Object.keys(data).sort((a,b) => b-a).forEach(year => {
+                    const yearSection = document.createElement('div');
+                    yearSection.id = `year-${year}`;
+                    yearSection.className = 'year-section mb-16';
+                    
+                    const yearTitle = document.createElement('h2');
+                    yearTitle.className = 'text-4xl font-heading font-bold mb-8 border-l-4 pl-4';
+                    yearTitle.textContent = year;
+                    yearSection.appendChild(yearTitle);
+
+                    const grid = document.createElement('div');
+                    grid.className = 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
+                    
+                    data[year].items.forEach(project => {
+                        const cardHTML = `
+                            <div class="project-card" onclick="this.classList.toggle('flipped')">
+                                <div class="card-inner">
+                                    <div class="card-front">
+                                        <img src="${project.image}" alt="${project.name}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/1E1E1E/F97316?text=Image+Error';">
+                                        <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                                            <h3 class="card-title text-xl text-white">${project.name}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-back">
+                                        <div>
+                                            <h4 class="text-xl font-heading mb-3">Specifications</h4>
+                                            <ul class="text-left space-y-2 text-gray-300 pl-5">
+                                                ${project.specs.map(spec => `<li><i class="fas fa-rocket mr-2 text-xs"></i>${spec}</li>`).join('')}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        grid.innerHTML += cardHTML;
+                    });
+                    
+                    yearSection.appendChild(grid);
+                    projectsContainer.appendChild(yearSection);
+                    observer.observe(yearSection);
+                });
+            }
+
+            // Filter logic
+            filterContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    const selectedYear = e.target.dataset.year;
+                    
+                    filterContainer.querySelector('.active').classList.remove('active');
+                    e.target.classList.add('active');
+                    
+                    document.querySelectorAll('.year-section').forEach(section => {
+                        if (selectedYear === 'all' || section.id === `year-${selectedYear}`) {
+                           section.classList.remove('hidden-section');
+                           if(selectedYear !== 'all') {
+                                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                           }
+                        } else {
+                           section.classList.add('hidden-section');
+                        }
+                    });
+                }
+            });
+
+            // Initial render
+            renderProjects(PROJECTS_DATA);
+            document.getElementById('page-content').classList.add('visible');
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Aeromodelling Club</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- New Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- NEW STYLE GUIDE REFACTOR --- */
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #1E1E1E;
+            --bg-footer: #0F0F0F;
+            --text-primary: #E5E5E5;
+            --text-secondary: #9CA3AF;
+            --accent: #F97316;
+            --accent-hover: #EA580C;
+            --link: #60A5FA;
+            --border: #2D2D2D;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        p, li, span, a {
+            font-family: 'Inter', sans-serif;
+        }
+        button {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+        }
+
+         /* --- Header Styles --- */
+#main-header {
+    position: fixed;
+    top: 0; left: 0; right: 0; z-index: 100;
+    background-color: var(--bg-secondary); 
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s ease;
+}
+#main-header.scrolled {
+    background-color: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(10px);
+}
+
+/* --- UPDATED HEADER ANIMATIONS --- */
+@keyframes flow-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.logo-container {
+    transition: transform 0.3s ease;
+}
+.logo-container:hover {
+    transform: scale(1.05);
+}
+.animated-logo-text {
+    background: linear-gradient(90deg, var(--accent), var(--text-primary), var(--accent));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: flow-gradient 5s ease-in-out infinite;
+}
+.animated-logo-text .club-name-span {
+    -webkit-text-fill-color: var(--text-primary); /* Keep sub-text normal */
+}
+
+.nav-link {
+    position: relative;
+    padding: 8px 4px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+.nav-link.active { color: var(--accent); }
+.nav-link:hover { color: var(--accent); }
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    transition: width 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease;
+}
+.nav-link:hover::after, .nav-link.active::after {
+    width: 100%;
+    height: 2px;
+    border-radius: 0;
+    opacity: 1;
+}
+/* --- END OF HEADER ANIMATIONS --- */
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
+        
+        /* General Animation */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background-image: linear-gradient(rgba(18, 18, 18, 0.7), rgba(18, 18, 18, 0.7)), url('gallery/2.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .hero-section h1 {
+            color: var(--text-primary);
+        }
+        .hero-section p {
+            color: var(--text-secondary);
+        }
+
+        /* Stats Section */
+        .stat-item .icon {
+            font-size: 2.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .stat-item h3 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-item p {
+             color: var(--text-secondary);
+        }
+
+        /* Parallax Image Sections */
+        .parallax-section {
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 8rem 0;
+            position: relative;
+        }
+        .parallax-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(18, 18, 18, 0.75);
+            z-index: 1;
+        }
+        .parallax-content {
+            position: relative;
+            z-index: 2;
+        }
+        .parallax-content h2 {
+            color: var(--text-primary);
+        }
+        .parallax-content p {
+            color: var(--text-secondary);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--text-primary);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Footer Styles */
+        .site-footer {
+            background-color: var(--bg-footer);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .footer-heading {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .footer-link {
+            color: var(--link);
+            transition: color 0.3s ease;
+        }
+        .footer-link:hover {
+            color: var(--accent);
+        }
+        .social-icon {
+            color: var(--text-secondary);
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+<header id="main-header">
+    <nav class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20"> <!-- Increased height from h-16 -->
+            <div class="flex-shrink-0">
+                <a href="index.html" class="logo-container flex items-center text-2xl font-black">
+                    <!-- Increased logo size and margin -->
+                    <img src="gallery/logo.png" alt="Club Logo" class="h-14 mr-4 rounded-full"> 
+                    <span class="animated-logo-text">Aeromodelling <span class="club-name-span font-light">Club</span></span>
+                </a>
+            </div>
+            <div class="hidden md:block">
+                <div class="ml-10 flex items-baseline space-x-4">
+                    <a href="index.html" class="nav-link px-3 text-sm font-medium">Home</a>
+                    <a href="competition.html" class="nav-link px-3 text-sm font-medium">Competition</a>
+                    <a href="projects.html" class="nav-link px-3 text-sm font-medium">Projects</a>
+                    <a href="team.html" class="nav-link px-3 text-sm font-medium">Our Team</a>
+                    <a href="alumni.html" class="nav-link px-3 text-sm font-medium">Our Alumni</a>
+                    <a href="about.html" class="nav-link active px-3 text-sm font-medium">About Us</a>
+                    <a href="reach.html" class="nav-link px-3 text-sm font-medium">Reach Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="fade-in-up">
+                <h1 class="text-5xl md:text-7xl font-extrabold">ABOUT US</h1>
+                <p class="mt-4 text-xl md:text-2xl max-w-3xl mx-auto">Pushing the Boundaries of Aerospace Innovation</p>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-20" style="background-color: var(--bg-secondary);">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="stat-item fade-in-up">
+                        <div class="icon"><i class="fas fa-users"></i></div>
+                        <h3 data-target="30" class="stat-counter">0</h3>
+                        <p class="text-lg font-semibold">Team Members</p>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <div class="icon"><i class="fas fa-plane-up"></i></div>
+                        <h3 data-target="25" class="stat-counter">0</h3>
+                        <p class="text-lg font-semibold">Prototypes Built</p>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <div class="icon"><i class="fas fa-trophy"></i></div>
+                        <h3 data-target="10" class="stat-counter">0</h3>
+                        <p class="text-lg font-semibold">Competitions Attended</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Story Section -->
+        <section class="py-20">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-accent">Our Story</h2>
+                <p class="text-lg text-secondary leading-relaxed">
+                    As the official aeromodelling division of the SAE Collegiate Club at MMMUT, Gorakhpur, we are a community driven by a shared passion for aerospace innovation and hands-on engineering. Our primary mission is to provide students a platform for practical experience in aircraft design, fabrication, and flight testing. By participating in different challenging competitions, we push ourselves to devise creative solutions for complex aerospace challenges. Our team unites students from diverse engineering backgrounds to collaboratively build aircraft tailored to specific mission goals.
+                </p>
+            </div>
+        </section>
+
+        <!-- Design Team Section -->
+        <section class="parallax-section" style="background-image: url('gallery/bac3.jpg');">
+            <div class="parallax-overlay"></div>
+            <div class="parallax-content max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-extrabold">Design & Structures</h2>
+                <p class="mt-4 text-xl max-w-3xl mx-auto">Crafting cutting-edge UAV designs using advanced CAD modeling, structural analysis, and aerodynamic simulations.</p>
+            </div>
+        </section>
+
+        <!-- Workspace Section -->
+        <section class="py-20" style="background-color: var(--bg-secondary);">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-12 fade-in-up">
+                <div class="md:w-1/2">
+                    <img src="gallery/4.jpg" alt="Workspace with tools and drone parts" class="rounded-lg shadow-2xl w-full h-full object-cover">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-4xl font-bold mb-4 text-accent">Our Workspace</h2>
+                    <p class="text-lg text-secondary leading-relaxed">
+                       Our dedicated workshop is where ideas take flight. Equipped for design, fabrication, and testing, this is the heart of our innovation. Here, we utilize cutting-edge tools for 3D printing, laser cutting, and composite manufacturing to bring our ambitious projects from digital blueprints to flight-ready prototypes.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mission & Vision -->
+        <section class="py-20">
+             <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-10">
+                <div class="fade-in-up">
+                    <h2 class="text-4xl font-bold mb-4 text-center text-accent">Our Mission</h2>
+                    <div class="p-8 rounded-lg border border-border bg-secondary h-full">
+                        <p class="text-lg text-center text-secondary">To innovate and educate through cutting-edge UAV technology and hands-on learning, empowering students to solve real-world aerospace challenges.</p>
+                    </div>
+                </div>
+                 <div class="fade-in-up">
+                    <h2 class="text-4xl font-bold mb-4 text-center text-accent">Our Vision</h2>
+                    <div class="p-8 rounded-lg border border-border bg-secondary h-full">
+                        <p class="text-lg text-center text-secondary">To break down the financial barriers to aerospace innovation. We aim to create an inclusive environment where any passionate student, regardless of their economic background, has the opportunity to learn, build, and master UAV technology.</p>
+                    </div>
+                </div>
+             </div>
+        </section>
+        
+        <!-- Join Us Section -->
+        <section class="py-20">
+            <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-up">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-accent">Ready to Take Flight?</h2>
+                <p class="text-lg text-secondary max-w-2xl mx-auto mb-8">
+                    Become a part of our journey to innovate and excel. We're always looking for passionate individuals to join our team.
+                </p>
+                <a href="reach.html" class="cta-button">Join Our Team</a>
+            </div>
+        </section>
+    </main>
+    
+    <!-- FOOTER -->
+    <footer class="site-footer pt-20 pb-8">
+        <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-10">
+                 <a href="index.html" class="inline-block mb-4">
+                    <img src="gallery/logo.png" alt="Club Logo" class="h-24 w-auto rounded-full mx-auto">
+                </a>
+                <h3 class="text-3xl font-black text-primary">Aeromodelling Club</h3>
+                <p class="text-md mt-2 uppercase tracking-widest text-secondary">Design. Build. Fly. Inspire.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="footer-heading">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="projects.html" class="footer-link">Projects</a></li>
+                        <li><a href="team.html" class="footer-link">Our Team</a></li>
+                        <li><a href="reach.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="mb-8 md:mb-0">
+                    <h3 class="footer-heading">Get In Touch</h3>
+                    <p>Madan Mohan Malaviya University of Technology (MMMUT), Gorakhpur, Uttar Pradesh, India – 273010</p>
+                     <a href="mailto:malaviyans.starfleet@gmail.com" class="footer-link inline-block mt-3">malaviyans.starfleet@gmail.com</a>
+                </div>
+                <div>
+                    <h3 class="footer-heading">Follow Us</h3>
+                    <div class="flex justify-center space-x-5 text-2xl">
+                        <a href="https://www.linkedin.com/company/malviyans-starfleet/" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/malaviyans.starfleet?igsh=MXZremhobWpzZ3Y5" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-16 border-t border-border pt-8 text-center text-sm">
+            <p>&copy; 2025 Aeromodelling Club MMMUT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for fade-in animations and counters
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        
+                        // Counter animation
+                        const counter = entry.target.querySelector('.stat-counter');
+                        if (counter && !counter.classList.contains('counted')) {
+                            counter.classList.add('counted');
+                            const target = +counter.getAttribute('data-target');
+                            let count = 0;
+                            
+                            const updateCount = () => {
+                                const increment = target / 50; // Speed of the counter
+                                if(count < target) {
+                                    count = Math.ceil(count + increment);
+                                    counter.innerText = count;
+                                    setTimeout(updateCount, 40);
+                                } else {
+                                    counter.innerText = target;
+                                }
+                            };
+                            updateCount();
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            // Observe all elements with the .fade-in-up class
+            const elements = document.querySelectorAll('.fade-in-up');
+            elements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>
+
