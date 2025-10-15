@@ -29,7 +29,7 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-primary);
             margin: 0;
-            padding-top: 80px; /* Space for fixed header */
+            padding-top: 80px;
         }
         
         h1, h2, h3, h4, .font-heading { font-family: 'Poppins', sans-serif; font-weight: 700; }
@@ -62,7 +62,6 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); 
             transform: scale(0.9); 
             transition: transform 0.3s;
-            /* YEH ADD KIYA GAYA HAI */
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -153,7 +152,7 @@
                 <div class="md:col-span-2">
                     <h2 class="competition-title text-6xl md:text-7xl font-extrabold uppercase tracking-wide">Aerothon</h2>
                     <p class="mt-4 text-lg text-text-secondary">AEROTHON, by SAE India, challenges students to design and innovate UAVs for real-world problems.</p>
-                    <a href="#" onclick="event.preventDefault(); showCompetitionDetails('aerothon');" class="competition-link mt-6 inline-block hover:underline font-semibold">Read More</a>
+                    <a href="https://saeindia.org/aerothon2025/" onclick="event.preventDefault(); showCompetitionDetails('aerothon');" class="competition-link mt-6 inline-block hover:underline font-semibold">Read More</a>
                 </div>
                 <div class="flex items-center justify-center md:justify-end"><img loading="lazy" src="/Photos/aerothon.jpeg" alt="Aerothon Logo" class="bg-white p-4 rounded-lg max-w-xs w-full shadow-lg"></div>
             </div>
@@ -181,7 +180,7 @@
                 <h2 class="text-4xl font-extrabold mb-12 text-center" style="color:var(--accent)">Team Achievements</h2>
                 <div class="max-w-4xl mx-auto space-y-8">
                     <div class="achievement-card p-6 rounded-xl flex items-start space-x-6" onclick="showAchievementImages('aerothon2022')">
-                        <img loading="lazy" src="/Photos/aerothon22.png" alt="Aerothon 2022" class="w-20 h-20 pt-1">
+                        <img loading="lazy" src="Photos/aerothon22.png" alt="Aerothon 2022" class="w-20 h-20 pt-1">
                         <div>
                             <h3 class="text-2xl font-bold">Aerothon 2022 – National Champion</h3>
                             <p class="text-lg mt-2">Team Starfleet proudly secured First Place in our very first attempt, winning both the initial and final rounds at the national level.</p>
@@ -189,7 +188,7 @@
                         <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="achievement-card p-6 rounded-xl flex items-start space-x-6" onclick="showAchievementImages('aerothon2023')">
-                        <img loading="lazy" src="/Photos/aerothon23.jpeg" alt="Aerothon 2023" class="w-20 h-20 pt-1">
+                        <img loading="lazy" src="Photos/aerothon23.jpeg" alt="Aerothon 2023" class="w-20 h-20 pt-1">
                         <div>
                             <h3 class="text-2xl font-bold">Aerothon 2023 – Consecutive Qualification</h3>
                             <p class="text-lg mt-2">Building on our success, we qualified in both rounds, ensuring a strong presence among India’s top drone innovators.</p>
@@ -197,7 +196,7 @@
                         <div class="arrow-btn"><i class="fas fa-arrow-right"></i></div>
                     </div>
                     <div class="achievement-card p-6 rounded-xl flex items-start space-x-6" onclick="showAchievementImages('sih2025')">
-                        <img loading="lazy" src="/Photos/sih2.jpeg" alt="SIH 2025" class="w-20 h-20 pt-1">
+                        <img loading="lazy" src="Photos/sih2.jpeg" alt="SIH 2025" class="w-20 h-20 pt-1">
                         <div>
                             <h3 class="text-2xl font-bold">Internal SIH 2025 – Winner</h3>
                             <p class="text-lg mt-2">We clinched First Prize in the Internal Smart India Hackathon with a project demonstrating creative and technical proficiency.</p>
@@ -235,7 +234,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Mobile Menu Logic
+            // --- MOBILE MENU LOGIC (START) ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenuSidebar = document.getElementById('mobile-menu-sidebar');
             const mobileMenuCloseButton = document.getElementById('mobile-menu-close-button');
@@ -256,22 +255,94 @@
             mobileMenuButton.addEventListener('click', openMenu);
             mobileMenuCloseButton.addEventListener('click', closeMenu);
             mobileMenuOverlay.addEventListener('click', closeMenu);
+            // --- MOBILE MENU LOGIC (END) ---
 
             // Header Scroll Effect
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
                 header.classList.toggle('scrolled', window.scrollY > 50);
             });
+            
+            // --- SCRIPT FOR MODALS, GALLERY, AND FIREWORKS RESTORED HERE ---
 
-            // Modal and Gallery scripts
-            const COMPETITIONS = { /* ... your competition data ... */ };
-            // ... (rest of your existing modal/gallery/fireworks scripts)
+            // Competition Modal Logic
+            const COMPETITIONS = {
+                'aerothon': { title: "Aerothon", years: "2022-2025", details: "The Team participated in Aerothon 2022, 2023, 2024 and 2025. It was exciting to see our creations soar high. We learned a lot, made new friends, and had a great time. Through this competition, we developed teamwork and various innovative skills which helped us to grow.", link: "https://saeindia.org/aerothon2025/" },
+                'boeing': { title: "National Aeromodelling Competition, IIT Kanpur", years: "2024", details: "The Team participated in the National Aeromodelling Competition held during Techkriti at IIT Kanpur in 2024. It was an exciting experience for us. We had a great time designing, building, and flying our RC aircraft, and we're eager to improve and participate again.", link: "https://www.iitk.ac.in/dord/boeing/beia/Boeing%20National%20Aeromodelling%20Competition.html" },
+                'sih': { title: "Smart India Hackathon", years: "2025 (Internal)", details: "Team StarFleet joined the Internal Smart India Hackathon 2025 and had an amazing time. We designed and flew 'DRAGONFLY' (a Drone designed for critical payload delivery during natural disasters), helping our team gain new skills. It was a thrilling experience and we're proud to have a chance to represent our college at the National Level.", link: "https://sih.gov.in/" }
+            };
+            const competitionModal = document.getElementById('competition-modal');
+            window.showCompetitionDetails = function(id) {
+                const data = COMPETITIONS[id];
+                if (!data) return;
+                competitionModal.querySelector('#modal-title').textContent = data.title;
+                competitionModal.querySelector('#modal-years').textContent = 'Participation Years: ' + data.years;
+                competitionModal.querySelector('#modal-details').textContent = data.details;
+                competitionModal.querySelector('#modal-link').href = data.link;
+                competitionModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            window.hideCompetitionDetails = function(event) {
+                if (event && event.target.id !== 'competition-modal' && !event.target.closest('button')) return;
+                competitionModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+
+            // Image Gallery Modal Logic
+            const ACHIEVEMENTS = {
+                'aerothon2022': { images: ['/Photos/ack22.webp', '/Photos/ach221.webp', '/Photos/ach222.webp', '/Photos/ach223.webp', '/Photos/ach224.webp'] },
+                'aerothon2023': { images: [ '/Photos/ach231.jpg','/Photos/ach232.jpg','/Photos/ach233.jpg','/Photos/ach234.jpg','/Photos/ach235.jpg'] },
+                'sih2025': { images: ['/Photos/achsih.jpg'] }
+            };
+            const imageModal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            let currentImages = [];
+            let currentImageIndex = 0;
+
+            function displayCurrentImage() {
+                modalImage.src = currentImages[currentImageIndex];
+                prevBtn.style.display = currentImageIndex > 0 ? 'flex' : 'none';
+                nextBtn.style.display = currentImageIndex < currentImages.length - 1 ? 'flex' : 'none';
+            }
+
+            window.showAchievementImages = function(id) {
+                const data = ACHIEVEMENTS[id];
+                if (!data || !data.images || data.images.length === 0) return;
+                currentImages = data.images;
+                currentImageIndex = 0;
+                displayCurrentImage();
+                imageModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            window.hideAchievementImages = function() {
+                imageModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            }
+            window.navigateGallery = function(direction, event) {
+                event.stopPropagation();
+                currentImageIndex += direction;
+                displayCurrentImage();
+            }
+
+            // Fireworks Script
+            const canvas = document.getElementById('fireworks-canvas');
+            const achievementsSection = document.getElementById('achievements-section'); 
+            if (canvas && achievementsSection) {
+                const ctx = canvas.getContext('2d');
+                function resizeCanvas() { canvas.width = achievementsSection.offsetWidth; canvas.height = achievementsSection.offsetHeight; }
+                resizeCanvas();
+                let fireworks = [], particles = [];
+                const fireworkColors = ['#F97316', '#EA580C', '#E5E5E5'];
+                class Firework { constructor() { this.x = Math.random() * canvas.width; this.y = canvas.height; this.targetY = 100 + Math.random() * (canvas.height / 3); this.color = fireworkColors[Math.floor(Math.random() * fireworkColors.length)]; this.speed = 2 + Math.random() * 2; } update() { this.y -= this.speed; } draw() { ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, 2, 0, Math.PI * 2); ctx.fill(); } }
+                class Particle { constructor(x, y, color) { this.x = x; this.y = y; this.color = color; this.size = Math.random() * 2 + 1; this.alpha = 1; this.angle = Math.random() * Math.PI * 2; this.speed = Math.random() * 5 + 1; this.friction = 0.95; this.gravity = 0.1; this.vx = Math.cos(this.angle) * this.speed; this.vy = Math.sin(this.angle) * this.speed; } update() { this.vx *= this.friction; this.vy *= this.friction; this.vy += this.gravity; this.x += this.vx; this.y += this.vy; this.alpha -= 0.02; } draw() { ctx.save(); ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill(); ctx.restore(); } }
+                function createExplosion(x, y, color) { for (let i = 0; i < 100; i++) { particles.push(new Particle(x, y, color)); } }
+                function animate() { requestAnimationFrame(animate); ctx.fillStyle = 'rgba(18, 18, 18, 0.1)'; ctx.fillRect(0, 0, canvas.width, canvas.height); if (Math.random() < 0.03) { fireworks.push(new Firework()); } fireworks.forEach((f, i) => { f.update(); f.draw(); if (f.y < f.targetY) { createExplosion(f.x, f.y, f.color); fireworks.splice(i, 1); } }); particles.forEach((p, i) => { if (p.alpha > 0) { p.update(); p.draw(); } else { particles.splice(i, 1); } }); }
+                animate();
+                window.addEventListener('resize', resizeCanvas);
+            }
         });
-    </script>
-    
-    <script>
-        // The rest of your scripts for modals, gallery, and fireworks
-        // (No changes needed here, just make sure they are included)
     </script>
 </body>
 </html>
